@@ -38,7 +38,7 @@ spec:
           {{- with .Values.config.filePath }}
           env:
             - name: OPERATOR_CONFIG_FILE
-              value: {{ . }}
+              value: "/app/{{ . }}"
           {{- end }}
           #livenessProbe:
           #  httpGet:
@@ -50,6 +50,9 @@ spec:
           #    port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /app
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -62,3 +65,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "adguard-ingress-operator.fullname" . }}-config
