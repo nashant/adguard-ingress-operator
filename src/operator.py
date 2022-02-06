@@ -44,6 +44,9 @@ async def update_ingress(
     new: dict,
     **_,
 ):
+    if status["loadBalancer"]["ingress"][0]["ip"] == None:
+        return
+
     old_spec = old.get("spec", spec)
     old_status = old.get("status", status)
     old_rules = get_rules(meta, old_spec, old_status, logger)
