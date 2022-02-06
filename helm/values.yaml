@@ -54,5 +54,5 @@ tolerations: []
 affinity: {}
 
 config:
-  filePath: /app/config.yaml
+  filePath: config.yaml
   instances: {}
