@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: adguard-ingress-operator
+  namespace: adguard
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ./helm
+      version: 0.0.1
+      sourceRef:
+        kind: GitRepository
+        name: adguard-ingress-operator
+        namespace: flux-system
+      interval: 1m
+  values:
+    config:
+      instances:
+      - host: adguard.local
+        port: 3000
+        username: my-username
+        password: supersecretpassword

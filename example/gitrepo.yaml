@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: adguard-ingress-operator
+  namespace: flux-system
+spec:
+  interval: 60m
+  url: https://github.com/nashant/adguard-ingress-operator.git
+  ref:
+    branch: main
