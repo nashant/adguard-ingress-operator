@@ -38,7 +38,7 @@ spec:
           {{- with .Values.config.filePath }}
           env:
             - name: OPERATOR_CONFIG_FILE
-              value: "/app/{{ . }}"
+              value: "/app/conf/{{ . }}"
           {{- end }}
           #livenessProbe:
           #  httpGet:
@@ -52,7 +52,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config
-              mountPath: /app
+              mountPath: /app/conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
