@@ -1,0 +1,3 @@
+kopf==1.34.0
+adguardhome==0.5.1
+PyYAML==6.0
