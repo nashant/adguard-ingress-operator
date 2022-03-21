@@ -11,7 +11,7 @@ def get_hosts(spec: Spec, ingress: str, logger: Logger) -> List[str]:
         raise TemporaryError(f"No hosts found in {ingress}")
 
 
-def get_ip(status: Status, ingress: str, logger: Logger) -> Union[str, None]:
+def get_ip(status: Status, ingress: str, logger: Logger, error_no_ip: bool) -> str:
     try:
         return status["loadBalancer"]["ingress"][0]["ip"]
     except KeyError:
@@ -22,9 +22,10 @@ def get_rules(
     meta: Meta,
     spec: Spec,
     status: Status,
-    logger: Logger
+    logger: Logger,
+    error_no_ip: bool=True
 ) -> List[Dict[str, str]]:
     ingress = f"{meta['namespace']}/{meta['name']}"
     hosts = get_hosts(spec, ingress, logger)
-    ip = get_ip(status, ingress, logger)
+    ip = get_ip(status, ingress, logger, error_no_ip)
     return set([HashableDict({"domain": host, "answer": ip}) for host in hosts])
